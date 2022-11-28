@@ -1,11 +1,10 @@
 import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 
 import scala.concurrent.Await
 import scala.util.{Failure, Success}
 
-object Main extends  App {
+object Main extends App {
   val host = "0.0.0.0"
   val port = 9000
 
@@ -15,23 +14,19 @@ object Main extends  App {
   import akka.http.scaladsl.server.Directives._
   import system.dispatcher
 
-  def route = path("allo"){
-    get {
-      complete("Allo Ola!")
-    }
-  }
+  val todoRepository = new InMemoryTodoRepository()
+  val router = new TodoRouter(todoRepository)
+  val server = new Server(router, host, port)
+  val binding = server.bind()
 
-  val binding = Http().bindAndHandle(route, host, port)
-
-  binding.onComplete{
+  binding.onComplete {
     case Success(_) => println("Success!")
     case Failure(error) => println(s"Failed: ${error.getMessage}")
   }
 
   import scala.concurrent.duration._
+
   Await.result(binding, 3.seconds)
-
-
 
 
 }
