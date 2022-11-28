@@ -5,15 +5,24 @@ trait Router {
 }
 
 
-class TodoRouter(todoRepository: TodoRepository) extends  Router with Directives {
+class TodoRouter(todoRepository: TodoRepository) extends Router with Directives {
 
   import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
   import io.circe.generic.auto._
 
-  override def route: Route = pathPrefix("todos"){
+  override def route: Route = pathPrefix("todos") {
     pathEndOrSingleSlash {
       get {
         complete(todoRepository.all())
+      }
+    } ~ path("done") {
+      get {
+        complete(todoRepository.done())
+      }
+    } ~ path("pending") {
+
+      get {
+        complete(todoRepository.pending())
       }
     }
   }
