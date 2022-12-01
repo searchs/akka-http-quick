@@ -7,7 +7,7 @@ trait Router {
 }
 
 
-class TodoRouter(todoRepository: TodoRepository) extends Router with Directives {
+class TodoRouter(todoRepository: TodoRepository) extends Router with Directives with TodoDirectives {
 
   import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
   import io.circe.generic.auto._

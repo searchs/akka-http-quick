@@ -18,6 +18,7 @@ object Main extends App {
     Todo("1", "Cook plain eggs", "Water-based egg meals", false),
     Todo("2", "Cook oily eggs", "Oil-based egg meals", true),
     Todo("3", "Shell cooked eggs", "Just cook the shells as meals", false),
+    Todo("4", "Get laundry to Charles Centre", "Weekly laundry at great price and timing.", true),
   ))
 
   val router = new TodoRouter(todoRepository)
